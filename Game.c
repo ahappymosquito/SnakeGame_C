@@ -12,6 +12,7 @@
 #define DOWN 80
 #define LEFT 75
 #define RIGHT 77
+#define background '.'           //边框 
  
 int length;
 int bend_no;
@@ -35,8 +36,8 @@ void Up();
 void Right();
 void ExitGame();
 int Scoreonly();
- 
-struct coordinate{                   //数据结构
+
+struct coordinate{
     int x;
     int y;
     int direction;
@@ -44,36 +45,35 @@ struct coordinate{                   //数据结构
  
 typedef struct coordinate coordinate;
  
-coordinate head, bend[500],food,body[30];      //bend弯曲
+coordinate head, bend[500],food,body[30];
  
 int main()
 {
  
     char key;
  
-    Print();
+    Print();      //开始的两句话 
  
     system("cls");
  
-    load();
+    load();        //loading。。。 ffffffffff 
  
-    length=5;
+    length=5;        //蛇的最初宽度 
  
-    head.x=25;
- 
+    head.x=25;   
     head.y=20;
  
-    head.direction=RIGHT;
+    head.direction=RIGHT; //RIGHT 77   
  
-    Boarder();
+    Boarder();    //边框 
  
-    Food(); //to generate food coordinates initially
+    Food();  
  
-    life=3; //number of extra lives
+    life=3; //生命数 
  
-    bend[0]=head;
+    bend[0]=head; //身体 
  
-    Move();   //initialing initial bend coordinate
+    Move();   // 
  
     return 0;
  
@@ -126,7 +126,7 @@ void Move()
  
         ExitGame();
  
-    }while(!kbhit());
+    }while(!kbhit());   //kbhit()检查是否有键盘输入 
  
     a=getch();
  
@@ -219,9 +219,11 @@ void load(){
     gotoxy(36,14);
     printf("loading...");
     gotoxy(30,15);
-    for(r=1;r<=20;r++){
-    for(q=0;q<=1000000;q++);//to display the character slowly
-    printf("%c",177);}
+    for(r=1;r<=20;r++)
+	{
+    for(q=0;q<=1000000;q++);   //缓慢显示字符      然而有卵用？？ 
+    printf("%c",102);
+	}
     getch();
 }
 void Down()
@@ -287,18 +289,17 @@ void Food()
     if(head.x==food.x&&head.y==food.y)
     {
         length++;
-        time_t a;
-        a=time(0);
-        srand(a);
-        food.x=rand()%70;
-        if(food.x<=10)
+        time_t a;        //就是long int a； 
+        a=time(0);       //整个时间， 
+        srand(a);        //然后产生伪随机数列 
+        food.x=rand()%70;//随机产生的数小于70 
+        if(food.x<=10)       //怕出界 
             food.x+=11;
         food.y=rand()%30;
         if(food.y<=10)
- 
             food.y+=11;
     }
-    else if(food.x==0)/*to create food for the first time coz global variable are initialized with 0*/
+    else if(food.x==0)/*第一次创建食物，因为全局变量初始化为0*/
     {
         food.x=rand()%70;
         if(food.x<=10)
@@ -417,7 +418,7 @@ void Bend()
        }
    }
 }
-void Boarder()
+void Boarder()               
 {
    system("cls");
    int i;
@@ -426,29 +427,29 @@ void Boarder()
    for(i=10;i<71;i++)
    {
        GotoXY(i,10);
-           printf("!");
+           printf("%c",background);
        GotoXY(i,30);
-           printf("!");
+           printf("%c",background);
    }
    for(i=10;i<31;i++)
    {
        GotoXY(10,i);
-           printf("!");
+           printf("%c",background);
        GotoXY(70,i);
-       printf("!");
+       printf("%c",background);
    }
 }
 void Print()
 {
    //GotoXY(10,12);
    printf("\tWelcome to the mini Snake game.(press any key to continue)\n");
-  getch();              //下一步
-   system("cls");        //清屏
+  getch();
+   system("cls");
    printf("\tGame instructions:\n");
    printf("\n-> Use arrow keys to move the snake.\n\n-> You will be provided foods at the several coordinates of the screen which you have to eat. Everytime you eat a food the length of the snake will be increased by 1 element and thus the score.\n\n-> Here you are provided with three lives. Your life will decrease as you hit the wall or snake's body.\n\n-> YOu can pause the game in its middle by pressing any key. To continue the paused game press any other key once again\n\n-> If you want to exit press esc. \n");
    printf("\n\nPress any key to play game...");
-    if(getch()==27)                                                                    //////////////存疑
-    exit(0);           //正常退出
+   if(getch()==27)
+   exit(0);
 }
 void record(){
    char plname[20],nplname[20],cha,c;
