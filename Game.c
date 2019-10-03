@@ -36,7 +36,7 @@ void Right();
 void ExitGame();
 int Scoreonly();
  
-struct coordinate{
+struct coordinate{                   //数据结构
     int x;
     int y;
     int direction;
@@ -44,7 +44,7 @@ struct coordinate{
  
 typedef struct coordinate coordinate;
  
-coordinate head, bend[500],food,body[30];
+coordinate head, bend[500],food,body[30];      //bend弯曲
  
 int main()
 {
